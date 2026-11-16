@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+const http = require('http');
+const app = require('../app');
+const conectar = require('../modelo/conexao');
+const port = Number(process.env.PORT || 3030);
+
+async function iniciar() {
+  try {
+    await conectar();
+    http.createServer(app).listen(port, () => {
+      console.log(`Servidor da livraria executando em http://localhost:${port}`);
+    });
+  } catch (erro) {
+    console.error('Não foi possível conectar ao MongoDB:', erro.message);
+    process.exit(1);
+  }
+}
+iniciar();
